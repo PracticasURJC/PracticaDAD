@@ -2,6 +2,8 @@ package practica2.pandemonium;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +20,7 @@ import practica2.pandemonium.model.Text;
 public class PandemoniumRestController {
 	
 	@Autowired
-    private PandemoniumService service;
+    private TextRepository repository;
 
     @RequestMapping(value = "/analysis", method = RequestMethod.POST)
     public @ResponseBody Reply getResult(@RequestBody Text text) {
@@ -27,8 +29,8 @@ public class PandemoniumRestController {
     }
     
     @RequestMapping(value = "/texts/{company}", method = RequestMethod.GET)
-    public @ResponseBody String getCompanyTexts(@PathVariable("company") String company) {
-        return null;
+    public @ResponseBody List<Text> getCompanyTexts(@PathVariable("company") String company) {
+        return repository.findByCompany(company);
     }
     
     
